@@ -1,7 +1,7 @@
 const { Message, Login, Information } = require('../../models');
 const { Op } = require('sequelize');
 
-// ✅ THÊM MỚI: Lấy danh sách admin available
+// Lấy danh sách admin available
 exports.getAvailableAdmins = async (req, res) => {
   try {
     const admins = await Login.findAll({
@@ -27,12 +27,11 @@ exports.getAvailableAdmins = async (req, res) => {
   }
 };
 
-// ✅ SỬA LẠI: Lấy tin nhắn với admin cụ thể
+//  Lấy tin nhắn với admin cụ thể
 exports.getMyMessages = async (req, res) => {
   try {
-    const { id_login } = req.user;
-    const { adminId } = req.query; // ✅ Thêm filter theo adminId
-
+    const { id_login } = req.user;// Customer ID (từ JWT token)
+    const { adminId } = req.query; // Admin ID (từ query param)
     const whereClause = {
       [Op.or]: [
         { id_sender: id_login },
@@ -40,7 +39,7 @@ exports.getMyMessages = async (req, res) => {
       ]
     };
 
-    // ✅ Nếu có adminId, chỉ lấy tin nhắn với admin đó
+    //  Nếu có adminId, chỉ lấy tin nhắn với admin đó
     if (adminId) {
       whereClause[Op.or] = [
         { id_sender: id_login, id_receiver: adminId },
@@ -86,11 +85,11 @@ exports.getMyMessages = async (req, res) => {
   }
 };
 
-// ✅ SỬA LẠI: Gửi tin nhắn cho admin CỤ THỂ
+// Gửi tin nhắn cho admin CỤ THỂ
 exports.sendMessageToAdmin = async (req, res) => {
   try {
     const { id_login } = req.user;
-    const { content, adminId } = req.body; // ✅ Nhận adminId từ client
+    const { content, adminId } = req.body; // Nhận adminId từ client
 
     if (!content || !content.trim()) {
       return res.status(400).json({
@@ -106,7 +105,7 @@ exports.sendMessageToAdmin = async (req, res) => {
       });
     }
 
-    // ✅ Kiểm tra admin tồn tại
+    // Kiểm tra admin tồn tại
     const admin = await Login.findOne({
       where: { 
         id_login: adminId,
@@ -123,7 +122,7 @@ exports.sendMessageToAdmin = async (req, res) => {
 
     const message = await Message.create({
       id_sender: id_login,
-      id_receiver: adminId, // ✅ Gửi cho admin cụ thể
+      id_receiver: adminId, // Gửi cho admin cụ thể
       content: content.trim(),
       created_at: new Date()
     });
@@ -151,7 +150,7 @@ exports.sendMessageToAdmin = async (req, res) => {
       ]
     });
 
-    // ✅ Emit socket cho admin cụ thể
+    // Emit socket cho admin cụ thể
     const io = req.app.get('io');
     if (io) {
       io.emit('new_message', {

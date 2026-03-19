@@ -11,12 +11,13 @@ const orderController = require('../controllers/customer/orderController');
 const feedbackController = require('../controllers/customer/feedbackController');
 const messageController = require('../controllers/customer/messageController');
 const paypalController = require('../controllers/customer/paypalController');
+const contactController = require('../controllers/customer/contactController');
 
 // Register route - KHÔNG CẦN ĐĂNG NHẬP
 router.post('/register', registerController.register);
 
 // Contact route - KHÔNG CẦN ĐĂNG NHẬP (khách hàng gửi liên hệ)
-// router.post('/contact', contactController.createContact); // ⭐ THÊM
+router.post('/contact', contactController.createContact); 
 
 // Header routes - KHÔNG CẦN ĐĂNG NHẬP
 router.get('/categories', headerCustomerController.getCategories);

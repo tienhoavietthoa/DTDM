@@ -6,15 +6,15 @@ exports.login = async (req, res) => {
     if (!identifier || !password) {
       return res.status(400).json({ success: false, msg: 'Thiếu thông tin đăng nhập' });
     }
-
+    //Gọi auth.service để xác thực
     const { token, user } = await authService.authenticate(identifier, password);
 
     // Xử lý redirect theo level
     let redirectTo = '/';
     if (user.id_level === 1) {
-      redirectTo = '/dashboard'; // ✅ Admin → /dashboard
+      redirectTo = '/dashboard'; // Admin → /dashboard
     } else if (user.id_level === 2) {
-      redirectTo = '/'; // ✅ Customer → trang chủ
+      redirectTo = '/'; // Customer → trang chủ
     }
 
     console.log('User level:', user.id_level, 'Redirect to:', redirectTo); // DEBUG

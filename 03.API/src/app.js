@@ -6,7 +6,7 @@ const app = express();
 
 
 app.use(cors({
-  origin: '*', // Cho phép tất cả origins (chỉ để test)
+  origin: '*', 
   credentials: true
 }));
 

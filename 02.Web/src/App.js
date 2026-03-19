@@ -29,9 +29,9 @@ import CustomerOrderDetail from './pages/Customer/Orders/CustomerOrderDetail';
 import CustomerReviews from './pages/Customer/Reviews/CustomerReviews';
 import AdminFeedback from './pages/Admin/Feedback/AdminFeedback';
 import FeedbackDetail from './pages/Admin/Feedback/FeedbackDetail';
-import CustomerMessages from './pages/Customer/Messages/CustomerMessages'; // ✅ THÊM
-import AdminMessages from './pages/Admin/Messages/AdminMessages'; // ✅ THÊM
-import ForgotPassword from './pages/Shared/ForgotPassword/ForgotPassword'; // ✅ THÊM
+import CustomerMessages from './pages/Customer/Messages/CustomerMessages'; 
+import AdminMessages from './pages/Admin/Messages/AdminMessages'; 
+import ForgotPassword from './pages/Shared/ForgotPassword/ForgotPassword'; 
 
 function App() {
   return (
@@ -46,7 +46,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/forgot-password" element={<ForgotPassword />} /> {/* ✅ THÊM */}
+          <Route path="/forgot-password" element={<ForgotPassword />} /> 
 
           {/* Admin routes */}
           <Route path="/dashboard" element={

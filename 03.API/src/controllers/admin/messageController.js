@@ -18,7 +18,7 @@ exports.getCustomersWithMessages = async (req, res) => {
         {
           model: Login,
           as: 'Sender',
-          // ✅ BỎ where: { id_level: 2 } để lấy cả admin và customer
+          //  { id_level: 2 } để lấy cả admin và customer
           attributes: ['id_login', 'username', 'id_level'],
           include: [{
             model: Information,
@@ -28,7 +28,7 @@ exports.getCustomersWithMessages = async (req, res) => {
         {
           model: Login,
           as: 'Receiver',
-          // ✅ BỎ where: { id_level: 2 } để lấy cả admin và customer
+          // { id_level: 2 } để lấy cả admin và customer
           attributes: ['id_login', 'username', 'id_level'],
           include: [{
             model: Information,
@@ -46,7 +46,7 @@ exports.getCustomersWithMessages = async (req, res) => {
       // Xác định customer (không phải admin)
       let customer = null;
       
-      // ✅ SỬA: Kiểm tra Sender và Receiver có tồn tại trước
+      //  Kiểm tra Sender và Receiver có tồn tại trước
       if (msg.id_sender === id_login && msg.Receiver && msg.Receiver.id_level === 2) {
         // Admin gửi cho customer
         customer = msg.Receiver;
@@ -204,7 +204,7 @@ exports.sendMessageToCustomer = async (req, res) => {
       ]
     });
 
-    // ⭐ EMIT SOCKET EVENT - Gửi tin nhắn realtime
+    // EMIT SOCKET EVENT - Gửi tin nhắn realtime
     const io = req.app.get('io');
     if (io) {
       io.emit('new_message', {
